@@ -135,11 +135,18 @@ class RelationshipsExtraMethods
     {
         return function ($builder, $joinType, $callback = null, $alias = null, bool $disableExtraConditions = false) {
             $builder->{$joinType}($this->getModel()->getTable(), function ($join) use ($callback, $disableExtraConditions) {
+
+                if(is_string($alias)) {
+                    $join->as($alias);
+                }
+
                 $join->on(
                     "{$this->getModel()->getTable()}.{$this->getForeignKeyName()}",
                     '=',
                     "{$this->parent->getTable()}.{$this->localKey}"
-                )->where($this->getMorphType(), '=', $this->getMorphClass());
+                );
+
+                $join->where($alias ? "{$alias}.{$this->getMorphType()}" : "{$this->getModel()->getTable()}.{$this->getMorphType()}", '=', $this->getMorphClass());
 
                 if ($disableExtraConditions === false && $this->usesSoftDeletes($this->query->getModel())) {
                     $join->whereNull($this->query->getModel()->getQualifiedDeletedAtColumn());

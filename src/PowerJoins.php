@@ -405,7 +405,9 @@ trait PowerJoins
     {
         if (is_string($callback)) {
             return function ($join) use ($callback) {
-                $join->as($callback);
+                if(!$join->getAlias()) {
+                    $join->as($callback);
+                }
             };
         }
 

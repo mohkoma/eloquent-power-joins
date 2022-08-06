@@ -78,6 +78,11 @@ class PowerJoinClause extends JoinClause
         return $this->model;
     }
 
+    public function getAlias(): string
+    {
+        return $this->alias;
+    }
+
     /**
      * Apply the global scopes to the joined query.
      */
