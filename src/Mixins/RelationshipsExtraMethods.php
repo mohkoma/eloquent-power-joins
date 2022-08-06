@@ -134,7 +134,7 @@ class RelationshipsExtraMethods
     protected function performJoinForEloquentPowerJoinsForMorph()
     {
         return function ($builder, $joinType, $callback = null, $alias = null, bool $disableExtraConditions = false) {
-            $builder->{$joinType}($this->getModel()->getTable(), function ($join) use ($callback, $disableExtraConditions) use ($alias) {
+            $builder->{$joinType}($this->getModel()->getTable(), function ($join) use ($callback, $disableExtraConditions, $alias) {
 
                 if(is_string($alias)) {
                     $join->as($alias);
