@@ -54,6 +54,10 @@ class PowerJoinClause extends JoinClause
      */
     public function as(string $alias)
     {
+        if(!empty($this->alias)) {
+            return $this;
+        }
+
         $this->alias = $alias;
         $this->table = sprintf('%s as %s', $this->table, $alias);
         $this->useTableAliasInConditions();
